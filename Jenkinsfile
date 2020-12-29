@@ -15,7 +15,7 @@ pipeline {
     
     stage('Lint') {
       steps {
-        sh 'hadolint --ignore DL3013 $WORKSPACE/Dockerfile'
+        sh 'docker run --rm -i hadolint/hadolint < $WORKSPACE/Dockerfile'
       }
     }
 
