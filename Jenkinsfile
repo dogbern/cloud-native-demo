@@ -45,12 +45,15 @@ pipeline {
         sh "docker rmi $registry:latest"
       }
     }
+
+    stage('set current kubectl context') {
+      steps {
+        sh 'kubectl config use-context arn:aws:eks:us-east-2:620145408342:cluster/demo'
+      }
+    }
     
     stage('Deploy Container to EKS Cluster') {
       steps {
-        //withCredentials([kubeconfigContent(credentialsId: kube, variable: 'KUBECONFIG_CONTENT')]) {
-          //sh '''echo "$KUBECONFIG_CONTENT" > kubeconfig && cat kubeconfig && rm kubeconfig'''
-        //}
         sh 'kubectl apply -f $WORKSPACE/kubernetes/app.yaml'
       }
     }
