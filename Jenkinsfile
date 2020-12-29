@@ -12,11 +12,13 @@ pipeline {
         git 'https://github.com/dogbern/cloud-native-demo.git'
       }
     }
+    
     stage('Lint') {
       steps {
         sh 'hadolint --ignore DL3013 $WORKSPACE/Dockerfile'
       }
     }
+
     stage('Build Image') {
       steps {
         script {
@@ -24,6 +26,7 @@ pipeline {
         }
       }
     }
+
     stage('Push Image') {
       steps {
         script {
@@ -33,6 +36,7 @@ pipeline {
         }
       }
     }
+
     stage('Remove Image from Jenkins') {
       steps {
           sh "docker rmi $registry:$BUILD_NUMBER"
