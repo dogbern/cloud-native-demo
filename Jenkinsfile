@@ -51,7 +51,7 @@ pipeline {
         //withCredentials([kubeconfigContent(credentialsId: kube, variable: 'KUBECONFIG_CONTENT')]) {
           //sh '''echo "$KUBECONFIG_CONTENT" > kubeconfig && cat kubeconfig && rm kubeconfig'''
         //}
-        kubernetesDeploy(kubeconfigId: kube, configs: '$WORKSPACE/kubernetes/app.yaml')
+        kubernetesDeploy(kubeconfigId: kube, configs: '$WORKSPACE/kubernetes/*')
       }
     }
   
