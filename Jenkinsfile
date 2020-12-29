@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('Cloning Git') {
       steps {
-        git credentialsId: 'github', url: 'https://github.com/dogbern/cloud-native-demo.git'
+        git 'https://github.com/dogbern/cloud-native-demo.git'
       }
     }
     
