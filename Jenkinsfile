@@ -48,7 +48,7 @@ pipeline {
     stage('Deploy Container to EKS Cluster') {
       steps {
         withAWS(credentials: aws_cred, region: 'us-east-2') {
-          sh '/usr/local/bin/kubectl apply -f $WORKSPACE/kubernetes/app.yaml'
+          sh 'kubectl get svc'
         }
       }
     }
