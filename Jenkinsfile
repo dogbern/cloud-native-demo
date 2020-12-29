@@ -3,6 +3,7 @@ pipeline {
     registry = "dogbern/demoapp"
     registryCredential = 'dockerhub'
     aws_cred = 'aws_cred'
+    kube = 'kube'
     dockerImage = ''
   }
   agent any
@@ -47,12 +48,13 @@ pipeline {
     
     stage('Deploy Container to EKS Cluster') {
       steps {
-        withAWS(credentials: aws_cred, region: 'us-east-2') {
-          sh 'kubectl get svc'
-        }
+        //withCredentials([kubeconfigContent(credentialsId: kube, variable: 'KUBECONFIG_CONTENT')]) {
+          //sh '''echo "$KUBECONFIG_CONTENT" > kubeconfig && cat kubeconfig && rm kubeconfig'''
+        //}
+        kubernetesDeploy(kubeconfigId: kube, configs: '$WORKSPACE/kubernetes/app.yaml')
       }
     }
-
+  
     stage('Route app service to www.bambouktu.com') {
       steps {
         withAWS(credentials: aws_cred, region: 'us-east-2') {
