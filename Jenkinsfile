@@ -13,13 +13,13 @@ pipeline {
       }
     }
     
-    stage('Lint') {
+    stage('Lint Dockerfile') {
       steps {
-        sh 'hadolint --ignore DL3013 $WORKSPACE/Dockerfile'
+        sh 'docker run --rm -i hadolint/hadolint < $WORKSPACE/Dockerfile'
       }
     }
 
-    stage('Build Image') {
+    stage('Build Docker Image') {
       steps {
         script {
           dockerImage = docker.build registry + ":$BUILD_NUMBER"
@@ -27,7 +27,7 @@ pipeline {
       }
     }
 
-    stage('Push Image') {
+    stage('Push Docker Image') {
       steps {
         script {
           withDockerRegistry(registry: [credentialsId: registryCredential]) {
@@ -37,20 +37,20 @@ pipeline {
       }
     }
 
-    stage('Remove Image from Jenkins') {
+    stage('Delete build images from Jenkins') {
       steps {
           sh "docker rmi $registry:$BUILD_NUMBER"
           sh "docker rmi $registry:latest"
       }
     }
     
-    stage('Deploy Demo Container') {
+    stage('Deploy Container to EKS Cluster') {
       steps {
         sh 'kubectl apply -f $WORKSPACE/kubernetes/app.yaml'
       }
     }
 
-    stage('Edit DNS record set to point to the app service') {
+    stage('Route app service to www.bambouktu.com') {
       steps {
         sh 'aws route53 change-resource-record-sets --hosted-zone-id Z047210437EDQ22T6THSN --change-batch file://$WORKSPACE/kubernetes/change_res_record_set.json'
       }
