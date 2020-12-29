@@ -2,6 +2,7 @@ pipeline {
   environment {
     registry = "dogbern/demoapp"
     registryCredential = 'dockerhub'
+    aws_cred = 'aws_cred'
     dockerImage = ''
   }
   agent any
@@ -39,20 +40,24 @@ pipeline {
 
     stage('Delete build images from Jenkins') {
       steps {
-          sh "docker rmi $registry:$BUILD_NUMBER"
-          sh "docker rmi $registry:latest"
+        sh "docker rmi $registry:$BUILD_NUMBER"
+        sh "docker rmi $registry:latest"
       }
     }
     
     stage('Deploy Container to EKS Cluster') {
       steps {
-        sh '/usr/local/bin/kubectl apply -f $WORKSPACE/kubernetes/app.yaml'
+        withAWS(credentials: aws_cred, region: 'us-east-2') {
+          sh '/usr/local/bin/kubectl apply -f $WORKSPACE/kubernetes/app.yaml'
+        }
       }
     }
 
     stage('Route app service to www.bambouktu.com') {
       steps {
-        sh 'aws route53 change-resource-record-sets --hosted-zone-id Z047210437EDQ22T6THSN --change-batch file://$WORKSPACE/kubernetes/change_res_record_set.json'
+        withAWS(credentials: aws_cred, region: 'us-east-2') {
+          sh 'aws route53 change-resource-record-sets --hosted-zone-id Z047210437EDQ22T6THSN --change-batch file://$WORKSPACE/kubernetes/change_res_record_set.json'
+        }
       }
     }
   }
