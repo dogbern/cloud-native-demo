@@ -1,4 +1,4 @@
-pytest
-pylint
-flask
-requests
+pytest==6.2.1
+pylint==2.6.0
+flask==1.1.2
+requests==2.25.1
