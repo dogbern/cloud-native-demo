@@ -52,21 +52,21 @@ pipeline {
     //   }
     // }
     
-    // stage('Deploy Container to EKS Cluster') {
-    //   steps {
-    //     sh 'kubectl apply -f $WORKSPACE/kubernetes/app.yaml'
-    //   }
-    // }
-    
     stage('Deploy Container to EKS Cluster') {
       steps {
-        withAWS(credentials: aws_cred, region: 'us-east-2') {
-          sh '''
-            kubectl apply -f $WORKSPACE/kubernetes/app.yaml
-          '''
-        }
+        sh 'kubectl apply -f $WORKSPACE/kubernetes/app.yaml'
       }
     }
+    
+    // stage('Deploy Container to EKS Cluster') {
+    //   steps {
+    //     withAWS(credentials: aws_cred, region: 'us-east-2') {
+    //       sh '''
+    //         kubectl apply -f $WORKSPACE/kubernetes/app.yaml
+    //       '''
+    //     }
+    //   }
+    // }
     
     stage('Route app service to www.bambouktu.com') {
       steps {
