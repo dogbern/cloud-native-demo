@@ -46,15 +46,24 @@ pipeline {
       }
     }
 
-    stage('set current kubectl context') {
-      steps {
-        sh 'kubectl config use-context arn:aws:eks:us-east-2:620145408342:cluster/demo'
-      }
-    }
+    // stage('set current kubectl context') {
+    //   steps {
+    //     sh 'kubectl config use-context arn:aws:eks:us-east-2:620145408342:cluster/demo'
+    //   }
+    // }
     
+    // stage('Deploy Container to EKS Cluster') {
+    //   steps {
+    //     sh 'kubectl apply -f $WORKSPACE/kubernetes/app.yaml'
+    //   }
+    // }
     stage('Deploy Container to EKS Cluster') {
       steps {
-        sh 'kubectl apply -f $WORKSPACE/kubernetes/app.yaml'
+        withAWS(credentials: aws_cred, region: 'us-east-2') {
+          sh '''
+            kubectl apply -f $WORKSPACE/kubernetes/app.yaml
+          '''
+        }
       }
     }
   
