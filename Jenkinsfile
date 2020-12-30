@@ -67,6 +67,7 @@ pipeline {
     //     }
     //   }
     // }
+    //
   
     stage('Route app service to www.bambouktu.com') {
       steps {
