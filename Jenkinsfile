@@ -57,6 +57,7 @@ pipeline {
     //     sh 'kubectl apply -f $WORKSPACE/kubernetes/app.yaml'
     //   }
     // }
+    //
     stage('Deploy Container to EKS Cluster') {
       steps {
         withAWS(credentials: aws_cred, region: 'us-east-2') {
