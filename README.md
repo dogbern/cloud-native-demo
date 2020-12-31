@@ -11,7 +11,7 @@ The design folder currently shows the initial whiteboard design and the tech sta
 
 ## Use the below command to run the container
 ```
-docker container run --name web -p 5000:5000 dogbern/demoapp:1.0
+docker container run --name web -p 5000:5000 dogbern/demoapp:latest
 ```
 
 ## Set up AWS EKS Cluster and Deploy app from local
@@ -32,6 +32,14 @@ docker container run --name web -p 5000:5000 dogbern/demoapp:1.0
 1. terraform-monitoring-dashboard/destroy_monitoring.sh
 2. terraform-infra/destroy_infra.sh
 3. terraform-jenkins/destroy_jenkins.sh
+```
+
+## Tools to install
+```
+Helm3
+Terraform
+kubectl
+aws cli
 ```
 
 
