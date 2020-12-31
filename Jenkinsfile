@@ -44,6 +44,12 @@ pipeline {
         sh "docker rmi $registry:latest"
       }
     }
+
+    stage('Remove old app') {
+      steps {
+        sh 'kubectl delete -f $WORKSPACE/kubernetes/app.yaml'
+      }
+    }
     
     stage('Deploy Container to EKS Cluster') {
       steps {
