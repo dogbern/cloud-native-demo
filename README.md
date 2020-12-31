@@ -34,6 +34,14 @@ docker container run --name web -p 5000:5000 dogbern/demoapp:latest
 3. terraform-jenkins/destroy_jenkins.sh
 ```
 
+## Tools to install
+```
+Helm3
+Terraform
+kubectl
+aws cli
+```
+
 
 
 
