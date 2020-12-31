@@ -5,7 +5,7 @@ app = Flask(__name__)
 @app.route('/')
 def home():
   return '''
-  <h1>Demo API to showcase Cloud Native Experience - v1</h1>
+  <h1>Demo API to showcase Cloud Native Experience - v2</h1>
   '''
 
 @app.route('/msg')
