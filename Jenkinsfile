@@ -3,7 +3,6 @@ pipeline {
     registry = "dogbern/demoapp"
     registryCredential = 'dockerhub'
     aws_cred = 'aws_cred'
-    kube = 'kube'
     dockerImage = ''
   }
   agent any
@@ -45,12 +44,6 @@ pipeline {
         sh "docker rmi $registry:latest"
       }
     }
-
-    // stage('set current kubectl context') {
-    //   steps {
-    //     sh 'kubectl config use-context arn:aws:eks:us-east-2:620145408342:cluster/demo'
-    //   }
-    // }
     
     stage('Deploy Container to EKS Cluster') {
       steps {
@@ -58,23 +51,12 @@ pipeline {
       }
     }
     
-    // stage('Deploy Container to EKS Cluster') {
+    // stage('Route app service to www.bambouktu.com') {
     //   steps {
     //     withAWS(credentials: aws_cred, region: 'us-east-2') {
-    //       sh '''
-    //         kubectl apply -f $WORKSPACE/kubernetes/app.yaml
-    //       '''
+    //       sh 'aws route53 change-resource-record-sets --hosted-zone-id Z047210437EDQ22T6THSN --change-batch file://$WORKSPACE/kubernetes/change_res_record_set.json'
     //     }
     //   }
     // }
-    //
-  
-    stage('Route app service to www.bambouktu.com') {
-      steps {
-        withAWS(credentials: aws_cred, region: 'us-east-2') {
-          sh 'aws route53 change-resource-record-sets --hosted-zone-id Z047210437EDQ22T6THSN --change-batch file://$WORKSPACE/kubernetes/change_res_record_set.json'
-        }
-      }
-    }
   }
 }
