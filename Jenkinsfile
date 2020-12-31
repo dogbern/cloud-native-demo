@@ -54,6 +54,7 @@ pipeline {
     stage('Deploy Container to EKS Cluster') {
       steps {
         sh 'kubectl apply -f $WORKSPACE/kubernetes/app.yaml'
+        sh 'kubectl get svc'
       }
     }
     
