@@ -11,7 +11,7 @@ The design folder currently shows the initial whiteboard design and the tech sta
 
 ## Use the below command to run the container
 ```
-docker container run --name web -p 5000:5000 dogbern/demoapp:1.0
+docker container run --name web -p 5000:5000 dogbern/demoapp:latest
 ```
 
 ## Set up AWS EKS Cluster and Deploy app from local
