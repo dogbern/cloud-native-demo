@@ -1,5 +1,5 @@
 {
-  "Comment": "Updating Alias resource record sets in Route 53 for blue traffic",
+  "Comment": "Updating Alias resource record sets in Route 53 for app traffic",
   "Changes": [
     {
       "Action": "UPSERT",
