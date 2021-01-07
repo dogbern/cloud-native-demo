@@ -55,7 +55,7 @@ pipeline {
     stage('Deploy Container to EKS Cluster') {
       steps {
         sh "sed -i 's/demoapp:latest/demoapp:$BUILD_NUMBER/g' $WORKSPACE/kubernetes/app.yaml"
-        sh 'kubectl apply -f $WORKSPACE/kubernetes/app.yaml'
+        sh '/var/lib/jenkins/bin/kubectl apply -f $WORKSPACE/kubernetes/app.yaml'
       }
     }
     
