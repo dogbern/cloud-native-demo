@@ -28,14 +28,30 @@ kind: Service
 metadata:
   name: my-app-service
   annotations:
-    service.beta.kubernetes.io/aws-load-balancer-type: nlb
-    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: 'true'
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
     app: my-app
   ports:
     - protocol: TCP
       port: 80
       targetPort: 5000
-...
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: my-ingress
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+  labels:
+    app: my-app
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /*
+            backend:
+              serviceName: "my-app-service"
+              servicePort: 80
