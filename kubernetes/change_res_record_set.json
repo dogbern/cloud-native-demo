@@ -8,7 +8,7 @@
         "Type": "A",
         "AliasTarget": {
           "HostedZoneId": "Z3AADJGX6KTTL2",
-          "DNSName": "dualstack.a834ef8d04ca54626a4b46beea447988-1067233147.us-east-2.elb.amazonaws.com",
+          "DNSName": "d642dfa0-default-myingress-d692-2039775024.us-east-2.elb.amazonaws.com",
           "EvaluateTargetHealth": false
         }
       }
