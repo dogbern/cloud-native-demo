@@ -38,13 +38,6 @@ pipeline {
         }
       }
     }
-
-    // stage('Delete build images from Jenkins') {
-    //   steps {
-    //     sh "docker rmi $registry:$BUILD_NUMBER"
-    //     sh "docker rmi $registry:latest"
-    //   }
-    // }
     
     stage('Deploy Container to EKS Cluster') {
       steps {
