@@ -32,7 +32,7 @@ pipeline {
       steps {
         script {
           withDockerRegistry(registry: [credentialsId: registryCredential]) {
-            dockerImage.push('latest')
+            dockerImage.push('$BUILD_NUMBER')
           }       
         }
       }
@@ -41,7 +41,7 @@ pipeline {
     stage('Delete build images from Jenkins') {
       steps {
         sh "docker rmi $registry:$BUILD_NUMBER"
-        sh "docker rmi $registry:latest"
+        //sh "docker rmi $registry:latest"
       }
     }
 
@@ -51,12 +51,12 @@ pipeline {
     //   }
     // }
     
-    // stage('Deploy Container to EKS Cluster') {
-    //   steps {
-    //     sh 'kubectl apply -f $WORKSPACE/kubernetes/app.yaml'
-    //     sh 'kubectl get svc'
-    //   }
-    // }
+    stage('Deploy Container to EKS Cluster') {
+      steps {
+        sh "kubectl set image deployments/my-app dogbern/demoapp:$BUILD_NUMBER"
+        sh 'kubectl get svc'
+      }
+    }
     
     // stage('Route app service to www.bambouktu.com') {
     //   steps {
