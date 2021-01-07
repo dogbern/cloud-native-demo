@@ -38,12 +38,12 @@ pipeline {
       }
     }
 
-    stage('Delete build images from Jenkins') {
-      steps {
-        sh "docker rmi $registry:$BUILD_NUMBER"
-        //sh "docker rmi $registry:latest"
-      }
-    }
+    // stage('Delete build images from Jenkins') {
+    //   steps {
+    //     sh "docker rmi $registry:$BUILD_NUMBER"
+    //     sh "docker rmi $registry:latest"
+    //   }
+    // }
 
     // stage('Remove old app') {
     //   steps {
