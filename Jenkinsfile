@@ -33,6 +33,7 @@ pipeline {
         script {
           withDockerRegistry(registry: [credentialsId: registryCredential]) {
             dockerImage.push('latest')
+            dockerImage.push("$BUILD_NUMBER")
           }       
         }
       }
@@ -53,7 +54,8 @@ pipeline {
     
     stage('Deploy Container to EKS Cluster') {
       steps {
-        sh "/var/lib/jenkins/bin/kubectl set image deployments/my-app my-app=dogbern/demoapp:latest"
+        sh "sed -i 's/demoapp:latest/demoapp:$BUILD_NUMBER/g' $WORKSPACE/kubernetes/app.yaml"
+        sh 'kubectl apply -f $WORKSPACE/kubernetes/app.yaml'
       }
     }
     
