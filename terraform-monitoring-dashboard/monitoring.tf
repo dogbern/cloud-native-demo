@@ -24,9 +24,4 @@ resource "helm_release" "k8s_dashboard" {
 
   repository = "https://kubernetes.github.io/dashboard/"
   chart      = "kubernetes-dashboard"
-
-  set {
-    name  = "service.type"
-    value = "LoadBalancer"
-  }
 }
