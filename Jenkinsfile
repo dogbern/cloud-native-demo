@@ -45,12 +45,6 @@ pipeline {
     //     sh "docker rmi $registry:latest"
     //   }
     // }
-
-    // stage('Remove old app') {
-    //   steps {
-    //     sh 'kubectl delete -f $WORKSPACE/kubernetes/app.yaml'
-    //   }
-    // }
     
     stage('Deploy Container to EKS Cluster') {
       steps {
@@ -59,12 +53,12 @@ pipeline {
       }
     }
     
-    // stage('Route app service to www.bambouktu.com') {
-    //   steps {
-    //     withAWS(credentials: aws_cred, region: 'us-east-2') {
-    //       sh 'aws route53 change-resource-record-sets --hosted-zone-id Z047210437EDQ22T6THSN --change-batch file://$WORKSPACE/kubernetes/change_res_record_set.json'
-    //     }
-    //   }
-    // }
+    stage('Route app service to www.bambouktu.com') {
+      steps {
+        withAWS(credentials: aws_cred, region: 'us-east-2') {
+          sh 'aws route53 change-resource-record-sets --hosted-zone-id Z047210437EDQ22T6THSN --change-batch file://$WORKSPACE/kubernetes/change_res_record_set.json'
+        }
+      }
+    }
   }
 }
