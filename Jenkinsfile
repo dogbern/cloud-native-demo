@@ -45,18 +45,18 @@ pipeline {
       }
     }
 
-    stage('Remove old app') {
-      steps {
-        sh 'kubectl delete -f $WORKSPACE/kubernetes/app.yaml'
-      }
-    }
+    // stage('Remove old app') {
+    //   steps {
+    //     sh 'kubectl delete -f $WORKSPACE/kubernetes/app.yaml'
+    //   }
+    // }
     
-    stage('Deploy Container to EKS Cluster') {
-      steps {
-        sh 'kubectl apply -f $WORKSPACE/kubernetes/app.yaml'
-        sh 'kubectl get svc'
-      }
-    }
+    // stage('Deploy Container to EKS Cluster') {
+    //   steps {
+    //     sh 'kubectl apply -f $WORKSPACE/kubernetes/app.yaml'
+    //     sh 'kubectl get svc'
+    //   }
+    // }
     
     // stage('Route app service to www.bambouktu.com') {
     //   steps {
